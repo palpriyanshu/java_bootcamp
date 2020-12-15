@@ -1,6 +1,6 @@
 package measurement;
 
-public enum Unit {
+public enum LengthUnit {
     INCH(2.5),
     FEET(30),
     CENTIMETER(1),
@@ -8,7 +8,7 @@ public enum Unit {
 
     private final double valueInCentimeter;
 
-    Unit(double valueInCentimeter) {
+    LengthUnit(double valueInCentimeter) {
         this.valueInCentimeter = valueInCentimeter;
     }
 
