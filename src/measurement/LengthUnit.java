@@ -1,6 +1,6 @@
 package measurement;
 
-public enum LengthUnit {
+public enum LengthUnit{
     INCH(2.5),
     FEET(30),
     CENTIMETER(1),
