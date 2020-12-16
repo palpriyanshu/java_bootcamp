@@ -23,11 +23,9 @@ public class Length {
         return thisAsStandard == otherAsStandard;
     }
 
-    public Length add(Length length) throws DifferentUnitsException {
-        if(this.unit != length.unit){
-            throw new DifferentUnitsException(this.unit, length.unit);
-        }
-        return new Length(this.value + length.value, this.unit);
+    public Length add(Length length) {
+        double totalMagnitude = this.asStandardValue() + length.asStandardValue();
+        return new Length(totalMagnitude, LengthUnit.standardUnit());
     }
 
     @Override

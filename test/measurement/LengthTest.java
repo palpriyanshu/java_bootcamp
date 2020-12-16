@@ -6,7 +6,7 @@ import static org.junit.Assert.*;
 
 public class LengthTest {
     @Test
-    public void shouldNotEquateTwoUnequalLengthsOfSameUnit() {
+    public void shouldNotConsiderTwoUnequalLengthsOfSameUnitAsEquivalent() {
         Length fiveFeet = new Length(5, LengthUnit.FEET);
         Length tenFeet = new Length(10, LengthUnit.FEET);
         assertFalse(fiveFeet.isEquivalent(tenFeet));
@@ -40,7 +40,7 @@ public class LengthTest {
     }
 
     @Test
-    public void shouldAddTwoLengthsOfSameUnits() throws DifferentUnitsException {
+    public void shouldAddTwoLengthsInInches(){
         Length twoInches = new Length(2, LengthUnit.INCH);
         Length threeInches = new Length(3, LengthUnit.INCH);
         Length fiveInches = new Length(5, LengthUnit.INCH);
@@ -48,9 +48,10 @@ public class LengthTest {
     }
 
     @Test
-    public void shouldThrowDifferentDimensionsExceptionWhileAddingTwoLengthsOfDifferentUnits() throws DifferentUnitsException {
+    public void shouldAddTwoLengthsInCentimeterAndInch(){
         Length twoInches = new Length(2, LengthUnit.INCH);
-        Length threeFeet = new Length(3, LengthUnit.FEET);
-        assertThrows(DifferentUnitsException.class, () -> twoInches.add(threeFeet));
+        Length twoAndHalfCentimeter = new Length(2.5, LengthUnit.CENTIMETER);
+        Length threeInches = new Length(3, LengthUnit.INCH);
+        assertEquals(threeInches, twoInches.add(twoAndHalfCentimeter));
     }
 }
