@@ -12,4 +12,9 @@ public enum VolumeUnit {
     public double calculateStandardValue(double value) {
         return value * this.valueInLiters;
     }
+
+    public double convertTo(double value, VolumeUnit unit) {
+        double baseMagnitude = this.calculateStandardValue(value);
+        return baseMagnitude / unit.valueInLiters;
+    }
 }
