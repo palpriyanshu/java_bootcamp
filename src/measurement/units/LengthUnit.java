@@ -12,8 +12,7 @@ public enum LengthUnit implements Unit {
         this.valueInInches = valueInInches;
     }
 
-    @Override
-    public double convertToBaseValue(double value) {
+    private double convertToBaseValue(double value) {
         return value * this.valueInInches;
     }
 
@@ -22,9 +21,5 @@ public enum LengthUnit implements Unit {
         LengthUnit lengthUnit = (LengthUnit) unit;
         double baseMagnitude = this.convertToBaseValue(value);
         return baseMagnitude / lengthUnit.valueInInches;
-    }
-
-    public static LengthUnit standardUnit() {
-        return INCH;
     }
 }

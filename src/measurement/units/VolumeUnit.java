@@ -9,8 +9,7 @@ public enum VolumeUnit implements Unit {
         this.valueInLiters = valueInLiters;
     }
 
-    @Override
-    public double convertToBaseValue(double value) {
+    private double convertToBaseValue(double value) {
         return value * this.valueInLiters;
     }
 

@@ -14,21 +14,23 @@ public class Length {
         this.unit = unit;
     }
 
-    private double asStandardValue() {
-        return this.unit.convertToBaseValue(this.value);
-    }
-
     public boolean isEquivalent(Length length) {
-        double thisAsStandard = this.asStandardValue();
-        double otherAsStandard = length.asStandardValue();
-
-        return thisAsStandard == otherAsStandard;
+        double otherAsThis = length.unit.convertTo(length.value, this.unit);
+        return this.value == otherAsThis;
     }
 
     public Length add(Length length) {
-        double totalMagnitude = this.asStandardValue() + length.asStandardValue();
-        return new Length(totalMagnitude, LengthUnit.standardUnit());
+        LengthUnit standardUnit = LengthUnit.INCH;
+        double thisAsStandard = this.unit.convertTo(this.value, standardUnit);
+        double otherAsStandard = length.unit.convertTo(length.value, standardUnit);
+        double totalMagnitude = this.round(thisAsStandard + otherAsStandard);
+        return new Length(totalMagnitude, standardUnit);
     }
+
+    private double round(double value){
+        return Math.round(value * 100.0) / 100.0 ;
+    }
+
 
     @Override
     public boolean equals(Object o) {

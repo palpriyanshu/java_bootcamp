@@ -15,14 +15,8 @@ public class Volume {
     }
 
     public boolean isEquivalent(Volume volume) {
-        double thisAsStandard = this.asStandardValue();
-        double otherAsStandard = volume.asStandardValue();
-
-        return thisAsStandard == otherAsStandard;
-    }
-
-    private double asStandardValue() {
-        return this.unit.convertToBaseValue(this.value);
+        double otherAsThis = volume.unit.convertTo(volume.value, this.unit);
+        return this.value == otherAsThis;
     }
 
     public Volume add(Volume volume) {

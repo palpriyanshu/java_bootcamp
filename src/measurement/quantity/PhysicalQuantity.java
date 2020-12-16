@@ -2,6 +2,8 @@ package measurement.quantity;
 
 import measurement.units.Unit;
 
+import java.util.Objects;
+
 public class PhysicalQuantity<U extends Unit> {
     private final double magnitude;
     private final U unit;
@@ -11,14 +13,33 @@ public class PhysicalQuantity<U extends Unit> {
         this.unit = unit;
     }
 
-    public boolean isEquivalent(PhysicalQuantity<U> volume) {
-        double thisAsStandard = this.asStandardValue();
-        double otherAsStandard = volume.asStandardValue();
-
-        return thisAsStandard == otherAsStandard;
+    public boolean isEquivalent(PhysicalQuantity<U> quantity) {
+        double otherAsThis = quantity.unit.convertTo(quantity.magnitude, this.unit);
+        return this.magnitude == otherAsThis;
     }
 
-    private double asStandardValue() {
-        return this.unit.convertToBaseValue(this.magnitude);
+    public PhysicalQuantity<U> add(PhysicalQuantity<U> quantity, U standardUnit) {
+        double thisAsStandard = this.unit.convertTo(this.magnitude, standardUnit);
+        double otherAsStandard = quantity.unit.convertTo(quantity.magnitude, standardUnit);
+        double totalMagnitude = this.round(thisAsStandard + otherAsStandard);
+        return new PhysicalQuantity(totalMagnitude, standardUnit);
+    }
+
+    private double round(double value){
+        return Math.round(value * 100.0) / 100.0 ;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PhysicalQuantity<?> that = (PhysicalQuantity<?>) o;
+        return Double.compare(that.magnitude, magnitude) == 0 &&
+                Objects.equals(unit, that.unit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(magnitude, unit);
     }
 }
