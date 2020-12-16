@@ -1,20 +1,22 @@
-package measurement;
+package measurement.units;
 
-public enum VolumeUnit {
+public enum VolumeUnit implements Unit<VolumeUnit> {
     LITER(1), GALLON(3.78);
 
-    private double valueInLiters;
+    private final double valueInLiters;
 
     VolumeUnit(double valueInLiters) {
         this.valueInLiters = valueInLiters;
     }
 
-    public double calculateStandardValue(double value) {
+    @Override
+    public double convertToBaseValue(double value) {
         return value * this.valueInLiters;
     }
 
+    @Override
     public double convertTo(double value, VolumeUnit unit) {
-        double baseMagnitude = this.calculateStandardValue(value);
+        double baseMagnitude = this.convertToBaseValue(value);
         return baseMagnitude / unit.valueInLiters;
     }
 }

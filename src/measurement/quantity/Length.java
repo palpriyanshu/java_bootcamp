@@ -1,4 +1,6 @@
-package measurement;
+package measurement.quantity;
+
+import measurement.units.LengthUnit;
 
 import java.util.Objects;
 
@@ -13,7 +15,7 @@ public class Length {
     }
 
     private double asStandardValue() {
-        return this.unit.calculateStandardValue(this.value);
+        return this.unit.convertToBaseValue(this.value);
     }
 
     public boolean isEquivalent(Length length) {

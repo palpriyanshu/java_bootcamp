@@ -1,5 +1,7 @@
 package measurement;
 
+import measurement.quantity.Length;
+import measurement.units.LengthUnit;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
