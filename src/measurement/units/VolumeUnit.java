@@ -1,6 +1,6 @@
 package measurement.units;
 
-public enum VolumeUnit implements Unit<VolumeUnit> {
+public enum VolumeUnit implements Unit {
     LITER(1), GALLON(3.78);
 
     private final double valueInLiters;
@@ -15,8 +15,9 @@ public enum VolumeUnit implements Unit<VolumeUnit> {
     }
 
     @Override
-    public double convertTo(double value, VolumeUnit unit) {
+    public double convertTo(double value, Unit unit) {
+        VolumeUnit volumeUnit = (VolumeUnit) unit;
         double baseMagnitude = this.convertToBaseValue(value);
-        return baseMagnitude / unit.valueInLiters;
+        return baseMagnitude / volumeUnit.valueInLiters;
     }
 }

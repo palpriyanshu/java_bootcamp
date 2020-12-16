@@ -4,8 +4,7 @@ import measurement.units.LengthUnit;
 import measurement.units.VolumeUnit;
 import org.junit.Test;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class PhysicalQuantityTest {
 
@@ -37,5 +36,6 @@ public class PhysicalQuantityTest {
     public void shouldAddTwoLengths() {
         PhysicalQuantity<LengthUnit> oneFeet = new PhysicalQuantity<>(1,LengthUnit.FEET);
         PhysicalQuantity<LengthUnit> oneInch = new PhysicalQuantity<>(1,LengthUnit.INCH);
+        PhysicalQuantity<LengthUnit> twoInch = new PhysicalQuantity<>(2,LengthUnit.INCH);
     }
 }

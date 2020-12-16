@@ -29,8 +29,12 @@ public class Volume {
         final VolumeUnit STANDARD_UNIT = VolumeUnit.LITER;
         double thisAsStandard = this.unit.convertTo(this.value, STANDARD_UNIT);
         double otherAsStandard = volume.unit.convertTo(volume.value, STANDARD_UNIT);
-        double totalMagnitude = thisAsStandard + otherAsStandard;
+        double totalMagnitude = this.round(thisAsStandard + otherAsStandard);
         return new Volume(totalMagnitude, STANDARD_UNIT);
+    }
+
+    private double round(double value){
+        return Math.round(value * 100.0) / 100.0 ;
     }
 
     @Override

@@ -1,6 +1,5 @@
-package measurement;
+package measurement.quantity;
 
-import measurement.quantity.Volume;
 import measurement.units.VolumeUnit;
 import org.junit.Test;
 
