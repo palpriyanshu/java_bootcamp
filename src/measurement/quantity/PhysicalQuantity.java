@@ -1,28 +1,39 @@
 package measurement.quantity;
 
+import measurement.exception.UnitCategoryMismatch;
 import measurement.units.Unit;
 
 import java.util.Objects;
 
-public class PhysicalQuantity<U extends Unit> {
+public class PhysicalQuantity {
     private final double magnitude;
-    private final U unit;
+    private final Unit unit;
 
-    public PhysicalQuantity(double magnitude, U unit) {
+    public PhysicalQuantity(double magnitude, Unit unit) {
         this.magnitude = magnitude;
         this.unit = unit;
     }
 
-    public boolean isEquivalent(PhysicalQuantity<U> quantity) {
-        double otherAsThis = quantity.unit.convertTo(quantity.magnitude, this.unit);
-        return this.magnitude == otherAsThis;
+    private boolean isNotOfSameCategory(Unit otherUnit){
+        return otherUnit.getClass() != unit.getClass();
     }
 
-    public PhysicalQuantity<U> add(PhysicalQuantity<U> quantity, U standardUnit) {
-        double thisAsStandard = this.unit.convertTo(this.magnitude, standardUnit);
-        double otherAsStandard = quantity.unit.convertTo(quantity.magnitude, standardUnit);
-        double totalMagnitude = this.round(thisAsStandard + otherAsStandard);
-        return new PhysicalQuantity(totalMagnitude, standardUnit);
+    public boolean isEquivalent(PhysicalQuantity quantity) {
+        if(isNotOfSameCategory(quantity.unit)) return false;
+
+        double otherAsBase = quantity.unit.convertToBase(quantity.magnitude);
+        double thisAsBase = this.unit.convertToBase(this.magnitude);
+        return otherAsBase == thisAsBase;
+    }
+
+    public PhysicalQuantity add(PhysicalQuantity quantity, Unit standardUnit) throws UnitCategoryMismatch {
+        if(isNotOfSameCategory(quantity.unit)) throw new UnitCategoryMismatch();
+
+        double thisAsBase = this.unit.convertToBase(this.magnitude);
+        double otherAsBase = quantity.unit.convertToBase(quantity.magnitude);
+
+        double totalMagnitude = this.round(thisAsBase + otherAsBase);
+        return new PhysicalQuantity(standardUnit.convertFromBase(totalMagnitude), standardUnit);
     }
 
     private double round(double value){
@@ -33,9 +44,8 @@ public class PhysicalQuantity<U extends Unit> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PhysicalQuantity<?> that = (PhysicalQuantity<?>) o;
-        return Double.compare(that.magnitude, magnitude) == 0 &&
-                Objects.equals(unit, that.unit);
+        PhysicalQuantity that = (PhysicalQuantity) o;
+        return Double.compare(that.magnitude, magnitude) == 0 && Objects.equals(unit, that.unit);
     }
 
     @Override

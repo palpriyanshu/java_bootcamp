@@ -1,5 +1,7 @@
 package measurement.units;
 
 public interface Unit {
-    double convertTo(double value, Unit unit);
+    double convertToBase(double value);
+
+    double convertFromBase(double baseValue);
 }

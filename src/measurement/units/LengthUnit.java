@@ -6,20 +6,19 @@ public enum LengthUnit implements Unit {
     CENTIMETER(0.4),
     MILLIMETER(0.04);
 
-    private final double valueInInches;
+    private final double conversionFactor;
 
-    LengthUnit(double valueInInches) {
-        this.valueInInches = valueInInches;
-    }
-
-    private double convertToBaseValue(double value) {
-        return value * this.valueInInches;
+    LengthUnit(double conversionFactor) {
+        this.conversionFactor = conversionFactor;
     }
 
     @Override
-    public double convertTo(double value, Unit unit) {
-        LengthUnit lengthUnit = (LengthUnit) unit;
-        double baseMagnitude = this.convertToBaseValue(value);
-        return baseMagnitude / lengthUnit.valueInInches;
+    public double convertToBase(double value) {
+        return value * this.conversionFactor;
+    }
+
+    @Override
+    public double convertFromBase(double baseValue) {
+        return baseValue / this.conversionFactor;
     }
 }
