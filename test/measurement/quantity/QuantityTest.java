@@ -33,20 +33,31 @@ public class QuantityTest {
     }
 
     @Test
-    public void shouldAddTwoLengths()  {
+    public void shouldAddTwoLengthsAndRepresentInUnitOfFirstQuantityIfStandardUnitIsNotSpecified()  {
+        Quantity<LengthUnit> oneCentimeter = new Quantity<>(1, LengthUnit.CENTIMETER);
+        Quantity<LengthUnit> twentyMillimeter = new Quantity<>(20, LengthUnit.MILLIMETER);
+        Quantity<LengthUnit> threeCentimeter = new Quantity<>(3, LengthUnit.CENTIMETER);
+
+        assertEquals(threeCentimeter, oneCentimeter.add(twentyMillimeter));
+    }
+
+    @Test
+    public void shouldAddTwoLengthsAndRepresentInStandardUnit()  {
         Quantity<LengthUnit> oneInch = new Quantity<>(1, LengthUnit.INCH);
         Quantity<LengthUnit> oneFeet = new Quantity<>(1, LengthUnit.FEET);
         Quantity<LengthUnit> thirteenInch = new Quantity<>(13, LengthUnit.INCH);
 
-        assertEquals(thirteenInch, oneInch.add(oneFeet, LengthUnit.INCH));
+        oneInch.setStandardUnit(LengthUnit.INCH);
+        assertEquals(thirteenInch, oneInch.add(oneFeet));
     }
 
     @Test
-    public void shouldAddTwoVolumes()  {
+    public void shouldAddTwoVolumesAndRepresentInStandardUnit()  {
         Quantity<VolumeUnit> oneLiter = new Quantity<>(1, VolumeUnit.LITER);
         Quantity<VolumeUnit> hundredGallon = new Quantity<>(1, VolumeUnit.GALLON);
         Quantity<VolumeUnit> fourPointSevenEightLiters = new Quantity<>(4.78, VolumeUnit.LITER);
 
-        assertEquals(fourPointSevenEightLiters, oneLiter.add(hundredGallon, VolumeUnit.LITER));
+        oneLiter.setStandardUnit(VolumeUnit.LITER);
+        assertEquals(fourPointSevenEightLiters, oneLiter.add(hundredGallon));
     }
 }
