@@ -1,6 +1,6 @@
 package measurement.quantity;
 
-import measurement.exception.UnitCategoryMismatch;
+import measurement.exception.UnitCategoryMismatchException;
 import measurement.units.Unit;
 
 import java.util.Objects;
@@ -26,8 +26,8 @@ public class PhysicalQuantity {
         return otherAsBase == thisAsBase;
     }
 
-    public PhysicalQuantity add(PhysicalQuantity quantity, Unit standardUnit) throws UnitCategoryMismatch {
-        if(isNotOfSameCategory(quantity.unit)) throw new UnitCategoryMismatch();
+    public PhysicalQuantity add(PhysicalQuantity quantity, Unit standardUnit) throws UnitCategoryMismatchException {
+        if(isNotOfSameCategory(quantity.unit)) throw new UnitCategoryMismatchException();
 
         double thisAsBase = this.unit.convertToBase(this.magnitude);
         double otherAsBase = quantity.unit.convertToBase(quantity.magnitude);

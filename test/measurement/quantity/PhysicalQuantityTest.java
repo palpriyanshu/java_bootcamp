@@ -1,6 +1,6 @@
 package measurement.quantity;
 
-import measurement.exception.UnitCategoryMismatch;
+import measurement.exception.UnitCategoryMismatchException;
 import measurement.units.LengthUnit;
 import measurement.units.VolumeUnit;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class PhysicalQuantityTest {
     }
 
     @Test
-    public void shouldAddTwoLengths() throws UnitCategoryMismatch {
+    public void shouldAddTwoLengths() throws UnitCategoryMismatchException {
         PhysicalQuantity oneInch = new PhysicalQuantity(1, LengthUnit.INCH);
         PhysicalQuantity oneFeet = new PhysicalQuantity(1, LengthUnit.FEET);
         PhysicalQuantity thirteenInch = new PhysicalQuantity(13, LengthUnit.INCH);
@@ -43,7 +43,7 @@ public class PhysicalQuantityTest {
     }
 
     @Test
-    public void shouldAddTwoVolumes() throws UnitCategoryMismatch {
+    public void shouldAddTwoVolumes() throws UnitCategoryMismatchException {
         PhysicalQuantity oneLiter = new PhysicalQuantity(1, VolumeUnit.LITER);
         PhysicalQuantity hundredGallon = new PhysicalQuantity(1, VolumeUnit.GALLON);
         PhysicalQuantity fourPointSevenEightLiters = new PhysicalQuantity(4.78, VolumeUnit.LITER);
