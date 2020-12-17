@@ -50,4 +50,11 @@ public class PhysicalQuantityTest {
 
         assertEquals(fourPointSevenEightLiters, oneLiter.add(hundredGallon, VolumeUnit.LITER));
     }
+
+    @Test
+    public void shouldThrowsUnitCategoryMismatchExceptionIfTwoDifferentUnitIsAdded(){
+        PhysicalQuantity oneLiter = new PhysicalQuantity(1, VolumeUnit.LITER);
+        PhysicalQuantity oneFeet = new PhysicalQuantity(1, LengthUnit.FEET);
+        assertThrows(UnitCategoryMismatchException.class, ()-> oneFeet.add(oneLiter,VolumeUnit.LITER));
+    }
 }

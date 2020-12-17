@@ -14,12 +14,13 @@ public class PhysicalQuantity {
         this.unit = unit;
     }
 
-    private boolean isNotOfSameCategory(Unit otherUnit){
-        return otherUnit.getClass() != unit.getClass();
+    private boolean isUnitOfSameCategory(Unit otherUnit){
+        return otherUnit.getClass() == unit.getClass();
     }
 
+
     public boolean isEquivalent(PhysicalQuantity quantity) {
-        if(isNotOfSameCategory(quantity.unit)) return false;
+        if(!isUnitOfSameCategory(quantity.unit)) return false;
 
         double otherAsBase = quantity.unit.convertToBase(quantity.magnitude);
         double thisAsBase = this.unit.convertToBase(this.magnitude);
@@ -27,7 +28,7 @@ public class PhysicalQuantity {
     }
 
     public PhysicalQuantity add(PhysicalQuantity quantity, Unit standardUnit) throws UnitCategoryMismatchException {
-        if(isNotOfSameCategory(quantity.unit)) throw new UnitCategoryMismatchException();
+        if(!isUnitOfSameCategory(quantity.unit)) throw new UnitCategoryMismatchException();
 
         double thisAsBase = this.unit.convertToBase(this.magnitude);
         double otherAsBase = quantity.unit.convertToBase(quantity.magnitude);
