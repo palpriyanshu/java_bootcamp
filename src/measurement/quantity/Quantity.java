@@ -21,12 +21,16 @@ public class Quantity<U extends Unit> {
         return this.unit.convertToBase(this.magnitude);
     }
 
+    private double round(double value) {
+        return Math.round(value * 100.0) / 100.0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Quantity<?> quantity = (Quantity<?>) o;
-        return Double.compare(quantity.magnitude, magnitude) <= 0.01 && Objects.equals(unit, quantity.unit);
+        return Double.compare(this.round(magnitude), this.round(quantity.magnitude)) == 0 && Objects.equals(unit, quantity.unit);
     }
 
     @Override
