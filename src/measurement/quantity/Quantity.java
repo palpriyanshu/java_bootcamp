@@ -4,32 +4,20 @@ import measurement.units.Unit;
 
 import java.util.Objects;
 
-public class Quantity<U extends Unit> {
+public abstract class Quantity<U extends Unit> {
     private final double magnitude;
     private final U unit;
-    private U standardUnit;
 
     public Quantity(double magnitude, U unit) {
         this.magnitude = magnitude;
         this.unit = unit;
-        this.standardUnit = unit;
-    }
-
-    public void setStandardUnit(U unit) {
-        this.standardUnit = unit;
     }
 
     public boolean isEquivalent(Quantity<U> quantity) {
         return this.asBaseValue() == quantity.asBaseValue();
     }
 
-    public Quantity<U> add(Quantity<U> quantity) {
-        double totalMagnitude = this.asBaseValue() + quantity.asBaseValue();
-        double valueInStandardUnit = this.standardUnit.convertFromBase(totalMagnitude);
-        return new Quantity<>(this.round(valueInStandardUnit), this.standardUnit);
-    }
-
-    private double asBaseValue() {
+    public double asBaseValue() {
         return this.unit.convertToBase(this.magnitude);
     }
 
@@ -42,21 +30,12 @@ public class Quantity<U extends Unit> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Quantity<?> quantity = (Quantity<?>) o;
-        return Double.compare(quantity.magnitude, this.magnitude) == 0 &&
+        return Double.compare(round(quantity.magnitude), round(this.magnitude)) == 0 &&
                 Objects.equals(this.unit, quantity.unit);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(magnitude, unit);
-    }
-
-    @Override
-    public String toString() {
-        return "Quantity{" +
-                "magnitude=" + magnitude +
-                ", unit=" + unit +
-                ", standardUnit=" + standardUnit +
-                '}';
     }
 }
