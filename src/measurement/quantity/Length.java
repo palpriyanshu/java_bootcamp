@@ -4,7 +4,7 @@ import measurement.units.LengthUnit;
 
 import java.util.Objects;
 
-public class Length extends Quantity<LengthUnit> {
+public class Length extends AddableQuantity<LengthUnit> {
     private final LengthUnit standardUnit;
 
     public Length(double magnitude, LengthUnit unit) {
@@ -12,14 +12,11 @@ public class Length extends Quantity<LengthUnit> {
         this.standardUnit = LengthUnit.INCH;
     }
 
-    public Length add(Length length) {
+    @Override
+    public AddableQuantity<LengthUnit> add(AddableQuantity<LengthUnit> length) {
         double totalMagnitude = this.asBaseValue() + length.asBaseValue();
         double valueInStandardUnit = this.standardUnit.convertFromBase(totalMagnitude);
-        return new Length(this.round(valueInStandardUnit), this.standardUnit);
-    }
-
-    private double round(double value) {
-        return Math.round(value * 100.0) / 100.0;
+        return new Length(valueInStandardUnit, this.standardUnit);
     }
 
     @Override

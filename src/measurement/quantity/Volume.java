@@ -4,7 +4,7 @@ import measurement.units.VolumeUnit;
 
 import java.util.Objects;
 
-public class Volume extends Quantity<VolumeUnit> {
+public class Volume extends AddableQuantity<VolumeUnit>{
     private final VolumeUnit standardUnit;
 
     public Volume(double magnitude, VolumeUnit unit) {
@@ -12,14 +12,11 @@ public class Volume extends Quantity<VolumeUnit> {
         this.standardUnit = VolumeUnit.LITER;
     }
 
-    public Volume add(Volume volume) {
+    @Override
+    public AddableQuantity<VolumeUnit> add(AddableQuantity<VolumeUnit> volume) {
         double totalMagnitude = this.asBaseValue() + volume.asBaseValue();
         double valueInStandardUnit = this.standardUnit.convertFromBase(totalMagnitude);
-        return new Volume(this.round(valueInStandardUnit), this.standardUnit);
-    }
-
-    private double round(double value) {
-        return Math.round(value * 100.0) / 100.0;
+        return new Volume(valueInStandardUnit, this.standardUnit);
     }
 
     @Override

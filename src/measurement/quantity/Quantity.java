@@ -4,7 +4,7 @@ import measurement.units.Unit;
 
 import java.util.Objects;
 
-public abstract class Quantity<U extends Unit> {
+public class Quantity<U extends Unit> {
     private final double magnitude;
     private final U unit;
 
@@ -17,12 +17,8 @@ public abstract class Quantity<U extends Unit> {
         return this.asBaseValue() == quantity.asBaseValue();
     }
 
-    public double asBaseValue() {
+    protected double asBaseValue() {
         return this.unit.convertToBase(this.magnitude);
-    }
-
-    private double round(double value) {
-        return Math.round(value * 100.0) / 100.0;
     }
 
     @Override
@@ -30,8 +26,7 @@ public abstract class Quantity<U extends Unit> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Quantity<?> quantity = (Quantity<?>) o;
-        return Double.compare(round(quantity.magnitude), round(this.magnitude)) == 0 &&
-                Objects.equals(this.unit, quantity.unit);
+        return Double.compare(quantity.magnitude, magnitude) <= 0.01 && Objects.equals(unit, quantity.unit);
     }
 
     @Override
