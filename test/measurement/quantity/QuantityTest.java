@@ -1,6 +1,7 @@
 package measurement.quantity;
 
 import measurement.units.LengthUnit;
+import measurement.units.TemperatureUnit;
 import measurement.units.VolumeUnit;
 import org.junit.Test;
 
@@ -30,6 +31,14 @@ public class QuantityTest {
         Quantity<VolumeUnit> threeHundredSeventyEightLiters = new Quantity<>(378, VolumeUnit.LITER);
 
         assertTrue(hundredGallon.isEquivalent(threeHundredSeventyEightLiters));
+    }
+
+    @Test
+    public void shouldConsiderTwoEqualTemperatureAsEquivalent() {
+        Quantity<TemperatureUnit> hundredCelsius = new Quantity<>(100, TemperatureUnit.CELSIUS);
+        Quantity<TemperatureUnit> twoHundredTwelveFahrenheit = new Quantity<>(212, TemperatureUnit.FAHRENHEIT);
+
+        assertTrue(hundredCelsius.isEquivalent(twoHundredTwelveFahrenheit));
     }
 
     @Test

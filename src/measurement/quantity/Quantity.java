@@ -2,29 +2,28 @@ package measurement.quantity;
 
 import measurement.units.Unit;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Quantity<UNIT extends Unit> {
+public class Quantity<U extends Unit> {
     private final double magnitude;
-    private final UNIT unit;
-    private UNIT standardUnit;
+    private final U unit;
+    private U standardUnit;
 
-    public Quantity(double magnitude, UNIT unit) {
+    public Quantity(double magnitude, U unit) {
         this.magnitude = magnitude;
         this.unit = unit;
         this.standardUnit = unit;
     }
 
-    public void setStandardUnit(UNIT unit) {
+    public void setStandardUnit(U unit) {
         this.standardUnit = unit;
     }
 
-    public boolean isEquivalent(Quantity<UNIT> quantity) {
+    public boolean isEquivalent(Quantity<U> quantity) {
         return this.asBaseValue() == quantity.asBaseValue();
     }
 
-    public Quantity<UNIT> add(Quantity<UNIT> quantity) {
+    public Quantity<U> add(Quantity<U> quantity) {
         double totalMagnitude = this.asBaseValue() + quantity.asBaseValue();
         double valueInStandardUnit = this.standardUnit.convertFromBase(totalMagnitude);
         return new Quantity<>(this.round(valueInStandardUnit), this.standardUnit);
@@ -43,8 +42,8 @@ public class Quantity<UNIT extends Unit> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Quantity<?> quantity = (Quantity<?>) o;
-        return Double.compare(quantity.magnitude, magnitude) == 0 &&
-                Objects.equals(unit, quantity.unit);
+        return Double.compare(quantity.magnitude, this.magnitude) == 0 &&
+                Objects.equals(this.unit, quantity.unit);
     }
 
     @Override
