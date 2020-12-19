@@ -8,13 +8,15 @@ public class Volume extends AddableQuantity<VolumeUnit>{
     private final VolumeUnit standardUnit;
 
     public Volume(double magnitude, VolumeUnit unit) {
-        super(magnitude, unit, Volume::new);
+        super(magnitude, unit);
         this.standardUnit = VolumeUnit.LITER;
     }
 
     @Override
-    protected VolumeUnit getStandardUnit() {
-        return this.standardUnit;
+    public AddableQuantity<VolumeUnit> add(AddableQuantity<VolumeUnit> quantity) {
+        double totalMagnitude = this.asBaseValue() + quantity.asBaseValue();
+        double valueInStandardUnit = this.standardUnit.convertFromBase(totalMagnitude);
+        return new Volume(valueInStandardUnit, this.standardUnit);
     }
 
     @Override

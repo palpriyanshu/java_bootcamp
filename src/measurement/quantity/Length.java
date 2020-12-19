@@ -8,13 +8,15 @@ public class Length extends AddableQuantity<LengthUnit> {
     private final LengthUnit standardUnit;
 
     public Length(double magnitude, LengthUnit unit) {
-        super(magnitude, unit, Length::new);
+        super(magnitude, unit);
         this.standardUnit = LengthUnit.INCH;
     }
 
     @Override
-    protected LengthUnit getStandardUnit() {
-        return this.standardUnit;
+    public AddableQuantity<LengthUnit> add(AddableQuantity<LengthUnit> quantity) {
+        double totalMagnitude = this.asBaseValue() + quantity.asBaseValue();
+        double valueInStandardUnit = this.standardUnit.convertFromBase(totalMagnitude);
+        return new Length(valueInStandardUnit, this.standardUnit);
     }
 
     @Override
