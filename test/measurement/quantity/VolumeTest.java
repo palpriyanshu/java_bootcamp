@@ -3,8 +3,7 @@ package measurement.quantity;
 import measurement.units.VolumeUnit;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class VolumeTest {
     @Test
@@ -13,6 +12,14 @@ public class VolumeTest {
         Volume threeHundredSeventyEightLiters = new Volume(378, VolumeUnit.LITER);
 
         assertTrue(hundredGallon.isEquivalent(threeHundredSeventyEightLiters));
+    }
+
+    @Test
+    public void shouldConsiderTwoUnEqualVolumesAsNotEquivalent() {
+        Volume oneGallon = new Volume(1, VolumeUnit.GALLON);
+        Volume threeLiters = new Volume(3, VolumeUnit.LITER);
+
+        assertFalse(oneGallon.isEquivalent(threeLiters));
     }
 
     @Test

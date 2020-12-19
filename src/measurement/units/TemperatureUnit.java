@@ -5,22 +5,22 @@ public enum TemperatureUnit implements Unit{
 
     FAHRENHEIT(-32, 5.0/9.0);
 
-    private final int additionFactor;
-    private final double multiplier;
+    private final int constant;
+    private final double slope;
 
-    TemperatureUnit(int additionFactor, double multiplier) {
-        this.additionFactor = additionFactor;
-        this.multiplier = multiplier;
+    TemperatureUnit(int constant, double slope) {
+        this.constant = constant;
+        this.slope = slope;
     }
 
     @Override
     public double convertToBase(double value) {
-        return (value + this.additionFactor) * this.multiplier;
+        return (value + this.constant) * this.slope;
 
     }
 
     @Override
     public double convertFromBase(double baseValue) {
-        return (baseValue / this.multiplier ) - this.additionFactor;
+        return (baseValue / this.slope) - this.constant;
     }
 }
