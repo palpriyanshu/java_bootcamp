@@ -6,15 +6,16 @@ import static org.junit.Assert.*;
 
 public class ParkingLotTest {
     @Test
-    public void shouldParkAtNextParkingPlot() throws LotNotAvailableException {
+    public void shouldGetStatusOfParkingLotAsAvailableWhenSlotsAreAvailable()  {
         ParkingLot parkingLot = new ParkingLot(2);
-        assertEquals(1, parkingLot.park());
+        assertEquals(ParkingLotStatus.AVAILABLE, parkingLot.park());
     }
 
     @Test
-    public void shouldThrowLotNotAvailableExceptionWhenPlotIsNotAvailable() throws LotNotAvailableException {
+    public void shouldGetStatusOfParkingLotAsFullWhenSlotsAreNotAvailable()  {
         ParkingLot parkingLot = new ParkingLot(1);
-        parkingLot.park();
-        assertThrows(LotNotAvailableException.class, parkingLot::park);
+        assertEquals(ParkingLotStatus.FULL, parkingLot.park());
     }
+
+
 }

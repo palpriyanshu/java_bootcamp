@@ -1,26 +1,23 @@
 package patterns;
 
-import java.util.Arrays;
-
 public class ParkingLot {
     private int occupiedPlots;
-    private SlotStatus[] slots;
+    private int totalSlots;
 
     public ParkingLot(int totalPlots) {
-        this.slots = new SlotStatus[totalPlots];
-        Arrays.fill(this.slots, SlotStatus.EMPTY);
+        this.totalSlots = totalPlots;
         this.occupiedPlots = 0;
     }
 
-    public int park() throws LotNotAvailableException {
-        if (this.isFull()) {
-            throw new LotNotAvailableException();
+    public ParkingLotStatus park()   {
+        this.occupiedPlots++;
+        if(this.isFull()){
+            return ParkingLotStatus.FULL;
         }
-        this.slots[this.occupiedPlots++] = SlotStatus.OCCUPIED;
-        return this.occupiedPlots;
+        return ParkingLotStatus.AVAILABLE;
     }
 
-    private boolean isFull() {
-        return this.occupiedPlots == this.slots.length;
+    public boolean isFull() {
+        return this.occupiedPlots == this.totalSlots;
     }
 }
