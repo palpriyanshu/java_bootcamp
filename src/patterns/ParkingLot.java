@@ -13,20 +13,14 @@ public class ParkingLot {
     }
 
     public int park() throws LotNotAvailableException {
-        if(this.occupiedPlots == this.plots.length) {
+        if (this.occupiedPlots == this.plots.length) {
             throw new LotNotAvailableException();
         }
-        this.plots[this.occupiedPlots] = PlotStatus.OCCUPIED;
-        this.occupiedPlots++;
+        this.plots[this.occupiedPlots++] = PlotStatus.OCCUPIED;
         return this.occupiedPlots;
     }
 
-    public boolean isLotFull(){
-        for (PlotStatus plot : this.plots) {
-            if(plot == PlotStatus.EMPTY){
-                return false;
-            }
-        }
-        return true;
+    public boolean isLotFull() {
+        return this.occupiedPlots == this.plots.length;
     }
 }
