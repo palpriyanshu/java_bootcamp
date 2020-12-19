@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class SecurityTest {
+public class ParkingLotTest {
     @Test
     public void shouldParkAtNextParkingPlot() throws LotNotAvailableException {
         ParkingLot parkingLot = new ParkingLot(2);
