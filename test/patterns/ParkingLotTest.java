@@ -17,18 +17,4 @@ public class ParkingLotTest {
         parkingLot.park();
         assertThrows(LotNotAvailableException.class, parkingLot::park);
     }
-
-    @Test
-    public void shouldGetOccupiedStatusOfPlotWhenCarIsParkedAtGivenLotNum() throws LotNotAvailableException {
-        ParkingLot parkingLot = new ParkingLot(1);
-        parkingLot.park();
-        assertTrue(parkingLot.isLotFull());
-    }
-
-    @Test
-    public void shouldGetEmptyStatusOfPlotWhenNoCarIsParkedAtGivenLotNum() {
-        ParkingLot parkingLot = new ParkingLot(1);
-        assertFalse(parkingLot.isLotFull());
-    }
-
 }

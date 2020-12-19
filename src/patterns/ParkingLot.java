@@ -4,23 +4,23 @@ import java.util.Arrays;
 
 public class ParkingLot {
     private int occupiedPlots;
-    private PlotStatus[] plots;
+    private SlotStatus[] slots;
 
     public ParkingLot(int totalPlots) {
-        this.plots = new PlotStatus[totalPlots];
-        Arrays.fill(this.plots, PlotStatus.EMPTY);
+        this.slots = new SlotStatus[totalPlots];
+        Arrays.fill(this.slots, SlotStatus.EMPTY);
         this.occupiedPlots = 0;
     }
 
     public int park() throws LotNotAvailableException {
-        if (this.occupiedPlots == this.plots.length) {
+        if (this.isFull()) {
             throw new LotNotAvailableException();
         }
-        this.plots[this.occupiedPlots++] = PlotStatus.OCCUPIED;
+        this.slots[this.occupiedPlots++] = SlotStatus.OCCUPIED;
         return this.occupiedPlots;
     }
 
-    public boolean isLotFull() {
-        return this.occupiedPlots == this.plots.length;
+    private boolean isFull() {
+        return this.occupiedPlots == this.slots.length;
     }
 }

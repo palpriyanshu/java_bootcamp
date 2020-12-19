@@ -1,6 +1,6 @@
 package patterns;
 
-public enum PlotStatus {
+public enum SlotStatus {
     OCCUPIED,
     EMPTY;
 }
