@@ -5,6 +5,6 @@ public enum ParkingLotStatus {
     AVAILABLE;
 
     public boolean isAvailable() {
-        return this == ParkingLotStatus.AVAILABLE;
+        return this == AVAILABLE;
     }
 }

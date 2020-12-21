@@ -3,7 +3,7 @@ package patterns;
 public class ParkingLot {
     private int occupiedPlots;
     private int totalSlots;
-    private Assistant assistant;
+    private Spectator spectator;
 
     public ParkingLot(int totalPlots) {
         this.totalSlots = totalPlots;
@@ -11,24 +11,26 @@ public class ParkingLot {
     }
 
     public boolean park() {
+        if (this.isFull()) {
+            return false;
+        }
         this.occupiedPlots++;
         if (this.isFull()) {
-            this.notifyAssistant();
-            return true;
+            notifySpectator();
         }
-        return false;
+        return true;
     }
 
     private boolean isFull() {
         return this.occupiedPlots == this.totalSlots;
     }
 
-    private void notifyAssistant() {
-        assistant.update(this);
+    private void notifySpectator() {
+        spectator.update(this);
     }
 
-    public void addAssistant(Assistant assistant) {
-        this.assistant = assistant;
+    public void addSpectator(Spectator spectator) {
+        this.spectator = spectator;
     }
 
 

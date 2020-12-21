@@ -1,16 +1,15 @@
 package patterns;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Objects;
 
-public class Assistant {
-    private HashMap<ParkingLot, ParkingLotStatus> parkingLots = new HashMap<>();
+public class Assistant implements Spectator{
+    private HashMap<ParkingLot, ParkingLotStatus> parkingLots;
 
-    public Assistant(ParkingLot[] parkingArea) {
-       Arrays.stream(parkingArea).forEach((parkingLot)-> parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE));
+    public Assistant() {
+        this.parkingLots = new HashMap<>();
     }
 
+    @Override
     public void update(ParkingLot parkingLot) {
         this.parkingLots.replace(parkingLot, ParkingLotStatus.FULL);
     }
@@ -29,5 +28,10 @@ public class Assistant {
         return "Assistant{" +
                 "parkingLots=" + parkingLots +
                 '}';
+    }
+
+    public void assign(ParkingLot parkingLot) {
+        parkingLot.addSpectator(this);
+        parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE);
     }
 }
