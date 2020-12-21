@@ -9,6 +9,6 @@ public class AssistantTest {
     public void shouldDisplayParkingLot() {
         ParkingLot[] parkingLots = {new ParkingLot(1)};
         Assistant assistant = new Assistant(parkingLots);
-        assistant.updateDisplay();
+        assistant.updateDisplay(parkingLots[0]);
     }
 }

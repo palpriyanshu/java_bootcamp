@@ -20,4 +20,12 @@ public class ParkingLot {
     public boolean isFull() {
         return this.occupiedPlots == this.totalSlots;
     }
+
+    @Override
+    public String toString() {
+        return "ParkingLot{" +
+                "occupiedPlots=" + occupiedPlots +
+                ", totalSlots=" + totalSlots +
+                '}';
+    }
 }
