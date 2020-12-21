@@ -11,20 +11,23 @@ public class Assistant {
        Arrays.stream(parkingArea).forEach((parkingLot)-> parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE));
     }
 
-    public void updateDisplay(ParkingLot parkingLot) {
+    public void update(ParkingLot parkingLot) {
         this.parkingLots.replace(parkingLot, ParkingLotStatus.FULL);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Assistant assistant = (Assistant) o;
-        return Objects.equals(parkingLots, assistant.parkingLots);
+    public boolean park() {
+        for (ParkingLot parkingLot : parkingLots.keySet()) {
+           if(parkingLots.get(parkingLot).isAvailable()){
+               return parkingLot.park();
+           }
+        }
+        return false;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(parkingLots);
+    public String toString() {
+        return "Assistant{" +
+                "parkingLots=" + parkingLots +
+                '}';
     }
 }
