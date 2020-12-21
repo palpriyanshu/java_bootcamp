@@ -11,4 +11,12 @@ public class AssistantTest {
         assistant.assign(new ParkingLot(2));
         assertTrue(assistant.park());
     }
+
+    @Test
+    public void shouldNotParkWhenNoParkingLotAvailable() {
+        Assistant assistant = new Assistant();
+        assistant.assign(new ParkingLot(1));
+        assistant.park();
+        assertFalse(assistant.park());
+    }
 }

@@ -33,7 +33,6 @@ public class ParkingLot {
         this.spectator = spectator;
     }
 
-
     @Override
     public String toString() {
         return "ParkingLot{" +
