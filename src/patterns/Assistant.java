@@ -3,10 +3,10 @@ package patterns;
 import java.util.HashMap;
 
 public class Assistant implements Spectator{
-    private HashMap<ParkingLot, ParkingLotStatus> parkingLots;
+    private HashMap<ParkingLot, ParkingLotStatus> parkingLots = new HashMap<>();
 
-    public Assistant() {
-        this.parkingLots = new HashMap<>();
+    public Assistant(ParkingLot parkingLot) {
+        this.parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE);
     }
 
     @Override
@@ -28,10 +28,5 @@ public class Assistant implements Spectator{
         return "Assistant{" +
                 "parkingLots=" + parkingLots +
                 '}';
-    }
-
-    public void assign(ParkingLot parkingLot) {
-        parkingLot.addSpectator(this);
-        parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE);
     }
 }

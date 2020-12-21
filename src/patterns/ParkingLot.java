@@ -14,11 +14,16 @@ public class ParkingLot {
         if (this.isFull()) {
             return false;
         }
-        this.occupiedPlots++;
+        this.occupiedPlots += 1;
+
         if (this.isFull()) {
-            notifySpectator();
+            this.notifySpectator();
         }
         return true;
+    }
+
+    public void setSpectator(Spectator spectator) {
+        this.spectator = spectator;
     }
 
     private boolean isFull() {
@@ -27,10 +32,6 @@ public class ParkingLot {
 
     private void notifySpectator() {
         spectator.update(this);
-    }
-
-    public void addSpectator(Spectator spectator) {
-        this.spectator = spectator;
     }
 
     @Override
