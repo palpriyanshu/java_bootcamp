@@ -25,7 +25,6 @@ public class ParkingLotTest {
     public void shouldNotifyAssistantWhenParkingLotIsFull()  {
         Assistant assistant = mock(Assistant.class);
         ParkingLot parkingLot = new ParkingLot(1);
-        assistant.assign(parkingLot);
         HashSet<Double> occupancy = new HashSet<>();
         occupancy.add(100.0);
         parkingLot.addSpectator(assistant::notify, occupancy);
