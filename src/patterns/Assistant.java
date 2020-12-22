@@ -14,13 +14,9 @@ public class Assistant implements Spectator{
         this.parkingLots.replace(parkingLot, ParkingLotStatus.FULL);
     }
 
-    public boolean park() {
-        for (ParkingLot parkingLot : parkingLots.keySet()) {
-           if(parkingLots.get(parkingLot).isAvailable()){
-               return parkingLot.park();
-           }
-        }
-        return false;
+    public void assign(ParkingLot parkingLot) {
+        parkingLot.setSpectator(this::update);
+        parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE);
     }
 
     @Override
