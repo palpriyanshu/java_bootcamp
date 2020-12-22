@@ -3,7 +3,7 @@ package patterns;
 import java.util.HashMap;
 
 public class Assistant implements Spectator{
-    private HashMap<ParkingLot, ParkingLotStatus> parkingLots = new HashMap<>();
+    private final HashMap<ParkingLot, ParkingLotStatus> parkingLots = new HashMap<>();
 
     public Assistant(ParkingLot parkingLot) {
         this.parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE);
@@ -15,7 +15,7 @@ public class Assistant implements Spectator{
     }
 
     public void assign(ParkingLot parkingLot) {
-        parkingLot.setSpectator(this::update);
+        parkingLot.setSpectator(this);
         parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE);
     }
 

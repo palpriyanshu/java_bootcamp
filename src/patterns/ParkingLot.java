@@ -2,7 +2,7 @@ package patterns;
 
 public class ParkingLot {
     private int occupiedPlots;
-    private int totalSlots;
+    private final int totalSlots;
     private Spectator spectator;
 
     public ParkingLot(int totalPlots) {
@@ -26,13 +26,9 @@ public class ParkingLot {
         this.spectator = spectator;
     }
 
-    private boolean isFull() {
-        return this.occupiedPlots == this.totalSlots;
-    }
+    private boolean isFull() { return this.occupiedPlots == this.totalSlots; }
 
-    private void notifySpectator() {
-        spectator.update(this);
-    }
+    private void notifySpectator() { spectator.update(this); }
 
     @Override
     public String toString() {
@@ -41,4 +37,5 @@ public class ParkingLot {
                 ", totalSlots=" + totalSlots +
                 '}';
     }
+
 }
