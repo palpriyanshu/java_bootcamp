@@ -1,6 +1,7 @@
 package patterns;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Assistant implements ParkingLotSpectator {
     private final HashMap<ParkingLot, ParkingLotStatus> parkingLots ;
@@ -10,12 +11,14 @@ public class Assistant implements ParkingLotSpectator {
     }
 
     @Override
-    public void update(ParkingLot parkingLot, int occupancyStatus) {
+    public void notify(ParkingLot parkingLot, double occupancyStatus) {
         this.parkingLots.replace(parkingLot, ParkingLotStatus.FULL);
     }
 
     public void assign(ParkingLot parkingLot) {
-        parkingLot.addSpectator(this,100);
+        HashSet<Double> occupancyStatus = new HashSet<>();
+        occupancyStatus.add(100.0);
+        parkingLot.addSpectator(this, occupancyStatus);
         parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE);
     }
 

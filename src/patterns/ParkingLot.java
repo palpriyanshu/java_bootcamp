@@ -1,11 +1,12 @@
 package patterns;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class ParkingLot {
     private int occupiedPlots;
     private final int totalSlots;
-    private HashMap<ParkingLotSpectator, Integer> parkingLotSpectators = new HashMap<>();
+    private final HashMap<ParkingLotSpectator, HashSet<Double>> parkingLotSpectators = new HashMap<>();
 
     public ParkingLot(int totalPlots) {
         this.totalSlots = totalPlots;
@@ -16,13 +17,12 @@ public class ParkingLot {
         if (this.isFull()) {
             return false;
         }
-        this.occupiedPlots += 1;
-
+        this.occupiedPlots++;
         this.notifySpectator();
         return true;
     }
 
-    public void addSpectator(ParkingLotSpectator parkingLotSpectator, int occupiedStatus) {
+    public void addSpectator(ParkingLotSpectator parkingLotSpectator, HashSet<Double> occupiedStatus) {
         this.parkingLotSpectators.put(parkingLotSpectator, occupiedStatus);
 
     }
@@ -31,15 +31,16 @@ public class ParkingLot {
 
     private void notifySpectator() {
         for (ParkingLotSpectator parkingLotSpectator : parkingLotSpectators.keySet()) {
-            int occupiedStatusInPercent = parkingLotSpectators.get(parkingLotSpectator);
-            if(occupiedStatusInPercent == this.getCurrentOccupiedStatus()){
-                parkingLotSpectator.update(this, 100);
+            HashSet<Double> occupiedStatusInPercent = parkingLotSpectators.get(parkingLotSpectator);
+            double currentOccupiedStatus = this.getCurrentOccupiedStatus();
+            if(occupiedStatusInPercent.contains(currentOccupiedStatus)) {
+                parkingLotSpectator.notify(this, currentOccupiedStatus);
             }
         }
     }
 
-    private int getCurrentOccupiedStatus() {
-        return (this.occupiedPlots / this.totalSlots) * 100;
+    private double getCurrentOccupiedStatus() {
+        return ((double) this.occupiedPlots) / this.totalSlots * 100;
     }
 
     @Override
