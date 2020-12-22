@@ -1,9 +1,11 @@
 package patterns;
 
+import java.util.HashMap;
+
 public class ParkingLot {
     private int occupiedPlots;
     private final int totalSlots;
-    private Spectator spectator;
+    private HashMap<ParkingLotSpectator, Integer> parkingLotSpectators = new HashMap<>();
 
     public ParkingLot(int totalPlots) {
         this.totalSlots = totalPlots;
@@ -16,19 +18,29 @@ public class ParkingLot {
         }
         this.occupiedPlots += 1;
 
-        if (this.isFull()) {
-            this.notifySpectator();
-        }
+        this.notifySpectator();
         return true;
     }
 
-    public void setSpectator(Spectator spectator) {
-        this.spectator = spectator;
+    public void addSpectator(ParkingLotSpectator parkingLotSpectator, int occupiedStatus) {
+        this.parkingLotSpectators.put(parkingLotSpectator, occupiedStatus);
+
     }
 
     private boolean isFull() { return this.occupiedPlots == this.totalSlots; }
 
-    private void notifySpectator() { spectator.update(this); }
+    private void notifySpectator() {
+        for (ParkingLotSpectator parkingLotSpectator : parkingLotSpectators.keySet()) {
+            int occupiedStatusInPercent = parkingLotSpectators.get(parkingLotSpectator);
+            if(occupiedStatusInPercent == this.getCurrentOccupiedStatus()){
+                parkingLotSpectator.update(this, 100);
+            }
+        }
+    }
+
+    private int getCurrentOccupiedStatus() {
+        return (this.occupiedPlots / this.totalSlots) * 100;
+    }
 
     @Override
     public String toString() {

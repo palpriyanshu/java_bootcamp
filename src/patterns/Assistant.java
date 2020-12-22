@@ -2,20 +2,20 @@ package patterns;
 
 import java.util.HashMap;
 
-public class Assistant implements Spectator{
-    private final HashMap<ParkingLot, ParkingLotStatus> parkingLots = new HashMap<>();
+public class Assistant implements ParkingLotSpectator {
+    private final HashMap<ParkingLot, ParkingLotStatus> parkingLots ;
 
-    public Assistant(ParkingLot parkingLot) {
-        this.parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE);
+    public Assistant() {
+        this.parkingLots = new HashMap<>();
     }
 
     @Override
-    public void update(ParkingLot parkingLot) {
+    public void update(ParkingLot parkingLot, int occupancyStatus) {
         this.parkingLots.replace(parkingLot, ParkingLotStatus.FULL);
     }
 
     public void assign(ParkingLot parkingLot) {
-        parkingLot.setSpectator(this);
+        parkingLot.addSpectator(this,100);
         parkingLots.put(parkingLot, ParkingLotStatus.AVAILABLE);
     }
 
