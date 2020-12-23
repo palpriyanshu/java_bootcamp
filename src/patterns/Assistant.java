@@ -10,7 +10,7 @@ public class Assistant implements ParkingLotSpectator {
     }
 
     @Override
-    public void notify(ParkingLot parkingLot, double occupancyStatus) {
+    public void notify(ParkingLot parkingLot, ParkingLotStatus occupancyStatus) {
         this.parkingLots.replace(parkingLot, ParkingLotStatus.FULL);
     }
 

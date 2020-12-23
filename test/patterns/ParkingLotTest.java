@@ -25,38 +25,35 @@ public class ParkingLotTest {
     public void shouldNotifyAssistantWhenParkingLotIsFull() {
         Assistant assistant = mock(Assistant.class);
         ParkingLot parkingLot = new ParkingLot(1);
-        HashSet<Double> occupancy = new HashSet<>();
-        occupancy.add(100.0);
-        parkingLot.addSpectator(assistant::notify, occupancy);
+
+        parkingLot.addSpectator(assistant::notify, ParkingLotStatus.FULL);
         parkingLot.park();
 
-        verify(assistant).notify(parkingLot, 100.0);
+        verify(assistant).notify(parkingLot, ParkingLotStatus.FULL);
     }
 
     @Test
     public void shouldNotifyAttendantWhenParkingLotIsFull() {
         ParkingLotSpectator attendant = mock(ParkingLotSpectator.class);
         ParkingLot parkingLot = new ParkingLot(1);
-        HashSet<Double> occupancy = new HashSet<>();
-        occupancy.add(100.0);
-        parkingLot.addSpectator(attendant::notify, occupancy);
+
+        parkingLot.addSpectator(attendant::notify, ParkingLotStatus.FULL);
         parkingLot.park();
 
-        verify(attendant).notify(parkingLot, 100.0);
+        verify(attendant).notify(parkingLot, ParkingLotStatus.FULL);
     }
 
     @Test
     public void shouldNotifyManagerWhenParkingLotIs80Percent() {
         ParkingLotSpectator manager = mock(ParkingLotSpectator.class);
         ParkingLot parkingLot = new ParkingLot(5);
-        HashSet<Double> occupancy = new HashSet<>();
-        occupancy.add(80.0);
-        parkingLot.addSpectator(manager::notify, occupancy);
+
+        parkingLot.addSpectator(manager::notify, ParkingLotStatus.EIGHTYPERCENT);
         parkingLot.park();
         parkingLot.park();
         parkingLot.park();
         parkingLot.park();
 
-        verify(manager).notify(parkingLot, 80.0);
+        verify(manager).notify(parkingLot, ParkingLotStatus.EIGHTYPERCENT);
     }
 }

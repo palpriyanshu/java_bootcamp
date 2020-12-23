@@ -6,11 +6,14 @@ import java.util.HashSet;
 public class ParkingLot {
     private int occupiedPlots;
     private final int totalSlots;
-    private final HashMap<ParkingLotSpectator, HashSet<Double>> parkingLotSpectators = new HashMap<>();
+    private final HashMap<ParkingLotStatus, HashSet<ParkingLotSpectator>> parkingLotSpectators = new HashMap<>();
 
     public ParkingLot(int totalPlots) {
         this.totalSlots = totalPlots;
         this.occupiedPlots = 0;
+        for (ParkingLotStatus key : ParkingLotStatus.values()) {
+            parkingLotSpectators.put(key, new HashSet<>());
+        }
     }
 
     public boolean park() {
@@ -22,25 +25,28 @@ public class ParkingLot {
         return true;
     }
 
-    public void addSpectator(ParkingLotSpectator parkingLotSpectator, HashSet<Double> occupiedStatus) {
-        this.parkingLotSpectators.put(parkingLotSpectator, occupiedStatus);
+    public void addSpectator(ParkingLotSpectator parkingLotSpectator, ParkingLotStatus occupiedStatus) {
+        this.parkingLotSpectators.get(occupiedStatus).add(parkingLotSpectator);
 
     }
 
-    private boolean isFull() { return this.occupiedPlots == this.totalSlots; }
+    private boolean isFull() {
+        return this.occupiedPlots == this.totalSlots;
+    }
 
     private void notifySpectator() {
-        for (ParkingLotSpectator parkingLotSpectator : parkingLotSpectators.keySet()) {
-            HashSet<Double> occupiedStatusInPercent = parkingLotSpectators.get(parkingLotSpectator);
-            double currentOccupiedStatus = this.getCurrentOccupiedStatus();
-            if(occupiedStatusInPercent.contains(currentOccupiedStatus)) {
-                parkingLotSpectator.notify(this, currentOccupiedStatus);
-            }
+        ParkingLotStatus currentOccupiedStatus = this.getCurrentOccupiedStatus();
+        HashSet<ParkingLotSpectator> spectators = this.parkingLotSpectators.get(currentOccupiedStatus);
+        for (ParkingLotSpectator spectator : spectators) {
+            spectator.notify(this, currentOccupiedStatus);
         }
     }
 
-    private double getCurrentOccupiedStatus() {
-        return ((double) this.occupiedPlots) / this.totalSlots * 100;
+    private ParkingLotStatus getCurrentOccupiedStatus() {
+        double statusInPercentage = ((double) this.occupiedPlots) / this.totalSlots * 100;
+        if(statusInPercentage == 80.0) return ParkingLotStatus.EIGHTYPERCENT;
+        return ParkingLotStatus.FULL;
+
     }
 
     @Override

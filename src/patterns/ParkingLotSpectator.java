@@ -1,5 +1,5 @@
 package patterns;
 
 public interface ParkingLotSpectator {
-    void notify(ParkingLot parkingLot, double occupancyStatus);
+    void notify(ParkingLot parkingLot, ParkingLotStatus occupancyStatus);
 }
