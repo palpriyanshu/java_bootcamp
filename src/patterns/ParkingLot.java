@@ -21,7 +21,7 @@ public class ParkingLot {
             return false;
         }
         this.occupiedPlots++;
-        this.notifySpectator();
+        this.notifySpectators();
         return true;
     }
 
@@ -33,7 +33,7 @@ public class ParkingLot {
         return this.occupiedPlots == this.totalSlots;
     }
 
-    private void notifySpectator() {
+    private void notifySpectators() {
         ParkingLotStatus currentOccupiedStatus = this.getCurrentOccupiedStatus();
         HashSet<ParkingLotSpectator> spectators = this.parkingLotSpectators.get(currentOccupiedStatus);
         for (ParkingLotSpectator spectator : spectators) {
@@ -43,8 +43,9 @@ public class ParkingLot {
 
     private ParkingLotStatus getCurrentOccupiedStatus() {
         double statusInPercentage = ((double) this.occupiedPlots) / this.totalSlots * 100;
-        if(statusInPercentage == 80.0) return ParkingLotStatus.EIGHTY_PERCENT_FULL;
+        if(statusInPercentage == 80.0) return ParkingLotStatus.ALMOST_FULL;
         if(statusInPercentage == 100.0) return ParkingLotStatus.FULL;
+        if(statusInPercentage <= 20.0) return ParkingLotStatus.ALMOST_VACANT;
         return ParkingLotStatus.VACANT;
 
     }

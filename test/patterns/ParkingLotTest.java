@@ -24,7 +24,7 @@ public class ParkingLotTest {
         Assistant assistant = mock(Assistant.class);
         ParkingLot parkingLot = new ParkingLot(1);
 
-        parkingLot.addSpectator(assistant::notify, ParkingLotStatus.FULL);
+        parkingLot.addSpectator(assistant, ParkingLotStatus.FULL);
         parkingLot.park();
 
         verify(assistant).notify(parkingLot, ParkingLotStatus.FULL);
@@ -35,7 +35,7 @@ public class ParkingLotTest {
         ParkingLotSpectator attendant = mock(ParkingLotSpectator.class);
         ParkingLot parkingLot = new ParkingLot(1);
 
-        parkingLot.addSpectator(attendant::notify, ParkingLotStatus.FULL);
+        parkingLot.addSpectator(attendant, ParkingLotStatus.FULL);
         parkingLot.park();
 
         verify(attendant).notify(parkingLot, ParkingLotStatus.FULL);
@@ -46,12 +46,23 @@ public class ParkingLotTest {
         ParkingLotSpectator manager = mock(ParkingLotSpectator.class);
         ParkingLot parkingLot = new ParkingLot(5);
 
-        parkingLot.addSpectator(manager::notify, ParkingLotStatus.EIGHTY_PERCENT_FULL);
+        parkingLot.addSpectator(manager, ParkingLotStatus.ALMOST_FULL);
         parkingLot.park();
         parkingLot.park();
         parkingLot.park();
         parkingLot.park();
 
-        verify(manager).notify(parkingLot, ParkingLotStatus.EIGHTY_PERCENT_FULL);
+        verify(manager).notify(parkingLot, ParkingLotStatus.ALMOST_FULL);
+    }
+
+    @Test
+    public void shouldNotifyAssistantWhenParkingLotIsLessOrEqualTo20PercentFull() {
+        Assistant assistant = mock(Assistant.class);
+        ParkingLot parkingLot = new ParkingLot(10);
+
+        parkingLot.addSpectator(assistant, ParkingLotStatus.ALMOST_VACANT);
+        parkingLot.park();
+
+        verify(assistant).notify(parkingLot, ParkingLotStatus.ALMOST_VACANT);
     }
 }
