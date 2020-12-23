@@ -2,8 +2,6 @@ package patterns;
 
 import org.junit.Test;
 
-import java.util.HashSet;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -48,12 +46,12 @@ public class ParkingLotTest {
         ParkingLotSpectator manager = mock(ParkingLotSpectator.class);
         ParkingLot parkingLot = new ParkingLot(5);
 
-        parkingLot.addSpectator(manager::notify, ParkingLotStatus.EIGHTYPERCENT);
+        parkingLot.addSpectator(manager::notify, ParkingLotStatus.EIGHTY_PERCENT_FULL);
         parkingLot.park();
         parkingLot.park();
         parkingLot.park();
         parkingLot.park();
 
-        verify(manager).notify(parkingLot, ParkingLotStatus.EIGHTYPERCENT);
+        verify(manager).notify(parkingLot, ParkingLotStatus.EIGHTY_PERCENT_FULL);
     }
 }

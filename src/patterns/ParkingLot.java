@@ -25,9 +25,8 @@ public class ParkingLot {
         return true;
     }
 
-    public void addSpectator(ParkingLotSpectator parkingLotSpectator, ParkingLotStatus occupiedStatus) {
-        this.parkingLotSpectators.get(occupiedStatus).add(parkingLotSpectator);
-
+    public void addSpectator(ParkingLotSpectator parkingLotSpectator, ParkingLotStatus lotStatus) {
+        this.parkingLotSpectators.get(lotStatus).add(parkingLotSpectator);
     }
 
     private boolean isFull() {
@@ -44,8 +43,9 @@ public class ParkingLot {
 
     private ParkingLotStatus getCurrentOccupiedStatus() {
         double statusInPercentage = ((double) this.occupiedPlots) / this.totalSlots * 100;
-        if(statusInPercentage == 80.0) return ParkingLotStatus.EIGHTYPERCENT;
-        return ParkingLotStatus.FULL;
+        if(statusInPercentage == 80.0) return ParkingLotStatus.EIGHTY_PERCENT_FULL;
+        if(statusInPercentage == 100.0) return ParkingLotStatus.FULL;
+        return ParkingLotStatus.VACANT;
 
     }
 

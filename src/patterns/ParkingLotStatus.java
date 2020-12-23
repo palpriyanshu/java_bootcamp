@@ -2,5 +2,7 @@ package patterns;
 
 public enum ParkingLotStatus {
     FULL,
-    AVAILABLE, EIGHTYPERCENT;
+    VACANT,
+    EIGHTY_PERCENT_FULL
+
 }
