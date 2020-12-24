@@ -43,7 +43,7 @@ public class ParkingLot {
 
     private ParkingLotStatus getCurrentOccupiedStatus() {
         double statusInPercentage = ((double) this.occupiedPlots) / this.totalSlots * 100;
-        if(statusInPercentage == 80.0) return ParkingLotStatus.ALMOST_FULL;
+        if(statusInPercentage >= 80.0) return ParkingLotStatus.ALMOST_FULL;
         if(statusInPercentage == 100.0) return ParkingLotStatus.FULL;
         if(statusInPercentage <= 20.0) return ParkingLotStatus.ALMOST_VACANT;
         return ParkingLotStatus.VACANT;
